@@ -9,8 +9,6 @@ FONT = ("Ubuntu", 10)
 WHITE = "#FFFFFF"
 GRAY= "#f9f9f9"
 
-
-
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate_password():
     pword_input.delete(0, 'end')
@@ -74,7 +72,6 @@ def add_password():
             uname_input.delete(0, 'end')
             pword_input.delete(0, 'end')
 
-
 # ---------------------------- FIND PASSWORD ------------------------------- #
 def find_password():
     website = web_input.get()
@@ -88,7 +85,6 @@ def find_password():
             messagebox.showinfo(title=f"Password Details for {website}", message= f"Email/Username: {data[website]['email']}\nPassword: {data[website]['password']}")
         else:
             messagebox.showerror(title=f"Error!", message= "Login not found!")
-
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
@@ -131,8 +127,5 @@ uname_input.grid(row= 2, column= 1, columnspan= 2, sticky='w')
 
 pword_input = Entry(width= 24, bg= WHITE)
 pword_input.grid(row= 3, column= 1, sticky='w')
-
-
-
 
 window.mainloop()
