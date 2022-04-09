@@ -9,6 +9,8 @@ FONT = ("Ubuntu", 10)
 WHITE = "#FFFFFF"
 GRAY= "#f9f9f9"
 
+
+
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate_password():
     pword_input.delete(0, 'end')
@@ -72,6 +74,22 @@ def add_password():
             uname_input.delete(0, 'end')
             pword_input.delete(0, 'end')
 
+
+# ---------------------------- FIND PASSWORD ------------------------------- #
+def find_password():
+    website = web_input.get()
+    try:
+        with open('pword.json', 'r') as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        messagebox.showerror(title="File Not Found", message= "There is no pword.json file!")
+    else:
+        if website in data:
+            messagebox.showinfo(title=f"Password Details for {website}", message= f"Email/Username: {data[website]['email']}\nPassword: {data[website]['password']}")
+        else:
+            messagebox.showerror(title=f"Error!", message= "Login not found!")
+
+
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title("Password Manager")
@@ -84,32 +102,35 @@ canvas.create_image(100, 100, image=logo_img)
 canvas.grid(row= 0, column= 1)
 
 #Labels
-website = Label(text="Website:", bg=WHITE, font=FONT)
-website.grid(row= 1, column= 0)
+wsite = Label(text="Website:", bg=WHITE, font=FONT)
+wsite.grid(row= 1, column= 0)
 
-uname = Label(text= "Email/Username:", bg=WHITE, font=FONT)
-uname.grid(row= 2, column= 0)
+usrname = Label(text= "Email/Username:", bg=WHITE, font=FONT)
+usrname.grid(row= 2, column= 0)
 
 pword = Label(text="Password:", bg=WHITE, font=FONT)
 pword.grid(row= 3, column= 0)
 
 #Buttons
 gen_pword = Button(text="Generate Password", width= 14, bg=GRAY,  font=FONT, command= generate_password)
-gen_pword.grid( row=3, column=2, columnspan=2 )
+gen_pword.grid(row=3, column=2, columnspan=2, sticky='w')
 
 add_pword = Button(text="Add", width=36, bg=GRAY, font=FONT, command= add_password)
-add_pword.grid(row=4, column= 1, columnspan= 2)
+add_pword.grid(row=4, column= 1, columnspan= 2, sticky='w')
+
+search = Button(text="Search", width=10, bg=GRAY, font=FONT, command= find_password)
+search.grid(row=1, column=2, columnspan = 2, sticky='w')
 
 #Input
-web_input = Entry(width=35, bg= WHITE)
-web_input.grid(row= 1, column= 1, columnspan= 2)
+web_input = Entry(width=24, bg= WHITE)
+web_input.grid(row= 1, column= 1, sticky='w')
 web_input.focus()
 
 uname_input = Entry(width= 35, bg= WHITE)
-uname_input.grid(row= 2, column= 1, columnspan= 2)
+uname_input.grid(row= 2, column= 1, columnspan= 2, sticky='w')
 
-pword_input = Entry(width= 21, bg= WHITE)
-pword_input.grid(row= 3, column= 1)
+pword_input = Entry(width= 24, bg= WHITE)
+pword_input.grid(row= 3, column= 1, sticky='w')
 
 
 
