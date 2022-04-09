@@ -62,7 +62,7 @@ window.minsize(width=500, height=500)
 window.config(padx=50, pady=50, bg=WHITE)
 
 canvas = Canvas(width=200, height = 200, bg=WHITE, highlightthickness=0)
-logo_img = PhotoImage(file='logo.png')
+logo_img = PhotoImage(file= 'logo.png')
 canvas.create_image(100, 100, image=logo_img)
 canvas.grid(row= 0, column= 1)
 
