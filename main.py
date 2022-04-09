@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 import random
 import pyperclip
+import json
 
 #----------------------------- GLOBAL VARS ----------------------------------------#
 FONT = ("Ubuntu", 10)
@@ -40,21 +41,37 @@ def add_password():
     website = web_input.get()
     uname = uname_input.get()
     password = pword_input.get()
+    login_data = {
+        website: {"email": uname,
+        "password": password,
+        }
+    }
 
     if website == "" or uname == "" or password == "":
         messagebox.showerror(title="Missing Fields Required!", message="You need to fill all required fields to save to file!")
+    
     else:
+        try:
+            with open('pword.json', 'r') as file:
+                #Reading old data
+                data = json.load(file)
 
-        is_ok = messagebox.askokcancel(title= website, message=f"These are the details entered: \nEmail: {uname}\nPassword: {password}\nIs it ok to save?")
-
-        if is_ok:
-
-            with open('pword.txt', 'a') as file:
-                file.write(f"{website} | {uname} | {password}\n")
+        except FileNotFoundError:
+            print("Creating New Data File - 'pword.json'")
+            with open('pword.json', 'w') as file:
+                #Saving updated data        
+                json.dump(login_data, file, indent=4)
+        else:
+            #Updating old data with new data
+            data.update(login_data)
+            with open('pword.json', 'w') as file:
+                #Saving updated data        
+                json.dump(data, file, indent=4)
+        finally:
             web_input.delete(0, 'end')
             uname_input.delete(0, 'end')
             pword_input.delete(0, 'end')
-        
+
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title("Password Manager")
